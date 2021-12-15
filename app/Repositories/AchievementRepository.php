@@ -61,5 +61,25 @@ class AchievementRepository implements AchievementInterface{
 
     }
 
+    function logCommentWrittenAchievement($achievementCriteriaConfigId, $userId)
+    {
+
+    }
+
+    function logLessonWatchedAchievement($achievementCriteriaConfigId, $userId)
+    {
+
+    }
+
+    function logBadgeAchievement($badgeCriteriaConfigId, $userId)
+    {
+
+    }
+
+    function hasUnlockedNewBadge($countAchievements)
+    {
+
+    }
+
 
 }

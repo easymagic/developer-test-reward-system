@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Interfaces\AchievementInterface;
+use App\Interfaces\UserActivityInterface;
+use App\Repositories\AchievementRepository;
+use App\Repositories\UserActivityRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,5 +28,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        app()->bind(UserActivityInterface::class,UserActivityRepository::class);
+        app()->bind(AchievementInterface::class,AchievementRepository::class);
     }
 }

@@ -16,5 +16,11 @@ interface AchievementInterface{
     function getNextBadge($badgeCriteriaConfigId);
     function userHasBadgeAchievement($badgeCriteriaConfigId);
     function getUnlockedNewBadge($hitCount); //hit_count_requirement
+    function hasUnlockedNewBadge($countAchievements);
+
+
+    function logCommentWrittenAchievement($achievementCriteriaConfigId,$userId);
+    function logLessonWatchedAchievement($achievementCriteriaConfigId,$userId);
+    function logBadgeAchievement($badgeCriteriaConfigId,$userId);
 
 }
