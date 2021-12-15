@@ -13,8 +13,12 @@ class CreateUserActivitiesTable extends Migration
      */
     public function up()
     {
+        // user_id
+        // type
         Schema::create('user_activities', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id')->nullable();
+            $table->string('type')->nullable();
             $table->timestamps();
         });
     }

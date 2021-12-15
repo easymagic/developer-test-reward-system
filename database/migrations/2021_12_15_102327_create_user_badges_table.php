@@ -13,8 +13,13 @@ class CreateUserBadgesTable extends Migration
      */
     public function up()
     {
+//         user_id
+// badge_criteria_config_id
+
         Schema::create('user_badges', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id')->nullable();
+            $table->integer('badge_criteria_config_id')->nullable();
             $table->timestamps();
         });
     }

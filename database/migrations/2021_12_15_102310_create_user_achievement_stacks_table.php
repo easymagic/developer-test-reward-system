@@ -13,8 +13,13 @@ class CreateUserAchievementStacksTable extends Migration
      */
     public function up()
     {
+// user_id
+// achievement_criteria_config_id
+
         Schema::create('user_achievement_stacks', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id')->nullable();
+            $table->integer('achievement_criteria_config_id')->nullable();
             $table->timestamps();
         });
     }

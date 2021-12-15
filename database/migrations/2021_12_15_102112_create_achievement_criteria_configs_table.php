@@ -13,8 +13,16 @@ class CreateAchievementCriteriaConfigsTable extends Migration
      */
     public function up()
     {
+        // name
+        // type
+        // sequence_order
+        // hit_count_requirement
         Schema::create('achievement_criteria_configs', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
+            $table->string('type')->nullable();
+            $table->integer('sequence_order')->nullable();
+            $table->integer('hit_count_requirement')->nullable();
             $table->timestamps();
         });
     }

@@ -13,8 +13,15 @@ class CreateBadgeCriteriaConfigsTable extends Migration
      */
     public function up()
     {
+        // name
+        // sequence_order
+        // hit_count_requirement
+
         Schema::create('badge_criteria_configs', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
+            $table->integer('sequence_order')->nullable();
+            $table->integer('hit_count_requirement')->nullable();
             $table->timestamps();
         });
     }
