@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class AchievementCriteriaConfig extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+     'name',
+     'type',
+     'sequence_order',
+     'hit_count_requirement'
+    ];
+
 }

@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class UserAchievementStack extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'achievement_criteria_config_id'
+    ];
+
 }
