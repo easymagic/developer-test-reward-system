@@ -4,6 +4,7 @@ namespace App\Repositories;
 use App\Interfaces\AchievementInterface;
 use App\Interfaces\UserActivityInterface;
 use App\Models\AchievementCriteriaConfig;
+use App\Models\BadgeCriteriaConfig;
 use App\Models\UserActivity;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -115,5 +116,46 @@ class UserActivityRepository implements UserActivityInterface{
         ->where('id','>',$index)
         ->where('type',AchievementRepository::LESSON_WATCHED)->orderBy('sequence_order','desc')->get();
     }
+
+    function getCurrentBadge($userId)
+    {
+
+       return BadgeCriteriaConfig::query()->whereHas('users',function(Builder $builder) use ($userId){
+          return $builder->where('user_id',$userId);
+       })->orderBy('id','desc')->first();
+
+    }
+
+    function getNextBadgeFromCurrentBadge($userId)
+    {
+       $current = $this->getCurrentBadge($userId);
+
+       if ($current){
+
+         return BadgeCriteriaConfig::query()
+         ->where('sequence_order',$current->sequence_order + 1)
+         ->first();
+
+       }
+
+       return $current;
+
+    }
+
+    function getRemainingToUnlockNextBadge($userId)
+    {
+        $current = $this->getCurrentBadge($userId);
+        $next = $this->getNextBadgeFromCurrentBadge($userId);
+
+        if ($current){
+          if ($next){
+            return ($next->hit_count_requirement - $current->hit_count_requirement);
+          }
+          return 0;
+        }
+
+        return BadgeCriteriaConfig::query()->first()->hit_count_requirement;
+    }
+
 
 }

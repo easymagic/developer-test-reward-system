@@ -1,6 +1,7 @@
 <?php
 
 use App\Interfaces\AchievementInterface;
+use App\Interfaces\UserActivityInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,15 +21,42 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('users/{user}/achievements',function($user, AchievementInterface $achievementInterface){
+Route::get('users/{user}/achievements',function($user, UserActivityInterface $userActivityInterface){
 
     return [
-      'unlocked_achievements'=>'',
-      'next_available_achievements'=>'',
-      'current_badge'=>'',
-      'next_badge'=>'',
-      'remaining_to_unlock_next_badge'=>''
+      'unlocked_achievements'=>$userActivityInterface->getUnlockedAchievements($user),
+      'next_available_achievements'=>[
+          'lessons_watched'=>$userActivityInterface->getNextAvailableLessonAchievements($user),
+          'comments_written'=>$userActivityInterface->getNextAvailableCommentAchievements($user)
+      ],
+      'current_badge'=>$userActivityInterface->getCurrentBadge($user),
+      'next_badge'=>$userActivityInterface->getNextBadgeFromCurrentBadge($user),
+      'remaining_to_unlock_next_badge'=>$userActivityInterface->getRemainingToUnlockNextBadge($user)
+    ];
+    //getNextBadgeFromCurrentBadge
+    //getRemainingToUnlockNextBadge
+
+
+});
+
+Route::get('log-lesson-watched/{userId}',function($userId,UserActivityInterface $userActivityInterface,AchievementInterface $achievementInterface){
+
+    $userActivityInterface->logLessonWatched($userId,$achievementInterface);
+
+    return [
+        'message'=>'Lesson watched logged successfully',
+        'error'=>false
     ];
 
+});
+
+Route::get('log-comment-written/{userId}',function($userId,UserActivityInterface $userActivityInterface,AchievementInterface $achievementInterface){
+
+    $userActivityInterface->logCommentWritten($userId,$achievementInterface);
+
+    return [
+        'message'=>'Comment Written logged successfully',
+        'error'=>false
+    ];
 
 });

@@ -10,6 +10,11 @@ interface UserActivityInterface{
     function getRecentCommentWrittenAchievement($userId);
     function getNextAvailableCommentAchievements($userId);
     function getNextAvailableLessonAchievements($userId);
+    function getCurrentBadge($userId);
+    function getNextBadgeFromCurrentBadge($userId);
+    function getRemainingToUnlockNextBadge($userId);
+    //remaining_to_unlock_next_badge
+
 
 
 }

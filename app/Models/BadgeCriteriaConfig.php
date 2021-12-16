@@ -15,4 +15,8 @@ class BadgeCriteriaConfig extends Model
         'hit_count_requirement'
     ];
 
+    function users(){
+        return $this->hasMany(UserBadge::class,'badge_criteria_config_id');
+    }
+
 }
