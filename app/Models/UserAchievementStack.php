@@ -14,4 +14,8 @@ class UserAchievementStack extends Model
         'achievement_criteria_config_id'
     ];
 
+    function criteria(){
+        return $this->belongsTo(AchievementCriteriaConfig::class,'achievement_criteria_config_id');
+    }
+
 }
