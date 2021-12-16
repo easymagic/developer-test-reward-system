@@ -28,5 +28,11 @@ interface AchievementInterface{
 
     function countCommentAchievements();
     function countLessonAchievements();
+    function countBadges();
+
+    function userHasUnlockedAchievementByName($userId,$name);
+    function userHasUnlockedBadgeByName($userId,$name);
+
+
 
 }

@@ -3,7 +3,7 @@ namespace App\Interfaces;
 
 interface UserActivityInterface{
 
-    function logLessonWatched($userId,$lessionId , AchievementInterface $achievementInterface);
-    function logCommentWritten($userId,$commentId , AchievementInterface $achievementInterface);
+    function logLessonWatched($userId , AchievementInterface $achievementInterface);
+    function logCommentWritten($userId , AchievementInterface $achievementInterface);
 
 }

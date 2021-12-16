@@ -5,6 +5,7 @@ use App\Interfaces\AchievementInterface;
 use App\Models\AchievementCriteriaConfig;
 use App\Models\BadgeCriteriaConfig;
 use App\Models\UserAchievementStack;
+use App\Models\UserActivity;
 use App\Models\UserBadge;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -21,16 +22,16 @@ class AchievementRepository implements AchievementInterface{
 
     function getCountCommentWritten($userId)
     {
-        return UserAchievementStack::query()->where('user_id',$userId)->whereHas('criteria',function(Builder $builder){
-           return $builder->where('type',self::COMMENT_WRITTEN);
-        })->count();
+        return UserActivity::query()->where('user_id',$userId)
+        ->where('type',self::COMMENT_WRITTEN)
+        ->count();
     }
 
     function getCountLessonWatched($userId)
     {
-        return UserAchievementStack::query()->where('user_id',$userId)->whereHas('criteria',function(Builder $builder){
-            return $builder->where('type',self::LESSON_WATCHED);
-         })->count();
+        return UserActivity::query()->where('user_id',$userId)
+        ->where('type',self::LESSON_WATCHED)
+        ->count();
     }
 
     function getNextBadge($badgeCriteriaConfigId)
@@ -177,6 +178,25 @@ class AchievementRepository implements AchievementInterface{
     function countLessonAchievements()
     {
         return AchievementCriteriaConfig::query()->where('type',self::LESSON_WATCHED)->count();
+    }
+
+    function userHasUnlockedAchievementByName($userId, $name)
+    {
+        return UserAchievementStack::query()->where('user_id',$userId)->whereHas('criteria',function(Builder $builder) use ($name){
+            return $builder->where('name',$name);
+         })->exists();
+    }
+
+    function userHasUnlockedBadgeByName($userId, $name)
+    {
+       return UserBadge::query()->where('user_id',$userId)->whereHas('criteria',function(Builder $builder) use($name){
+          return $builder->where('name',$name);
+       })->exists();
+    }
+
+    function countBadges()
+    {
+       return BadgeCriteriaConfig::query()->count();
     }
 
 

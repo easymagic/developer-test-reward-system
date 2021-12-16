@@ -15,4 +15,10 @@ class UserBadge extends Model
       'user_id',
       'badge_criteria_config_id'
     ];
+
+
+    function criteria(){
+        return $this->belongsTo(BadgeCriteriaConfig::class,'badge_criteria_config_id');
+    }
+
 }

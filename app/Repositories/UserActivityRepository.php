@@ -8,7 +8,7 @@ use App\Models\UserActivity;
 class UserActivityRepository implements UserActivityInterface{
 
 
-    function logLessonWatched($userId, $lessionId, AchievementInterface $achievementInterface)
+    function logLessonWatched($userId, AchievementInterface $achievementInterface)
     {
 
         UserActivity::create([
@@ -38,7 +38,7 @@ class UserActivityRepository implements UserActivityInterface{
 
     }
 
-    function logCommentWritten($userId, $commentId, AchievementInterface $achievementInterface)
+    function logCommentWritten($userId, AchievementInterface $achievementInterface)
     {
 
         UserActivity::create([
@@ -47,6 +47,8 @@ class UserActivityRepository implements UserActivityInterface{
         ]);
 
         $countCommentWritten = $achievementInterface->getCountCommentWritten($userId);
+
+        // dd($countCommentWritten);
 
         if ($achievementInterface->hasUnlockedNewAchievement($countCommentWritten,AchievementRepository::COMMENT_WRITTEN)){
            $newAchivement = $achievementInterface->getUnlockedAchievement($countCommentWritten,AchievementRepository::COMMENT_WRITTEN);
