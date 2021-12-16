@@ -65,12 +65,14 @@ class ExampleTest extends TestCase
             $hit_count_requirement=25
         );
 
-        $achievementConfig->createAchievementCriteria(
+        $dd = $achievementConfig->createAchievementCriteria(
             $name='50 Lessons Watched',
             $type=AchievementRepository::LESSON_WATCHED,
             $sequence_order=4,
             $hit_count_requirement=50
         );
+
+        // dd($dd);
 
         $this->assertEquals(5,$achievementConfig->countLessonAchievements());
     }
