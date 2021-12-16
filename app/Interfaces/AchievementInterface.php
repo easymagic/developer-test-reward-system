@@ -23,4 +23,7 @@ interface AchievementInterface{
     function logLessonWatchedAchievement($achievementCriteriaConfigId,$userId);
     function logBadgeAchievement($badgeCriteriaConfigId,$userId);
 
+    function createBadgeCriteria();
+    function createAchievementCriteria();
+
 }
