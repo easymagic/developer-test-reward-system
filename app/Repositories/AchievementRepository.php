@@ -140,7 +140,12 @@ class AchievementRepository implements AchievementInterface{
 
     function createAchievementCriteria($name, $type, $sequence_order, $hit_count_requirement)
     {
-        AchievementCriteriaConfig::create([
+       $check = AchievementCriteriaConfig::query()->where('name',$name);
+       if ($check->exists()){
+         return $check->first();
+       }
+
+        return AchievementCriteriaConfig::create([
             'name'=>$name,
             'type'=>$type,
             'sequence_order'=>$sequence_order,
@@ -151,12 +156,27 @@ class AchievementRepository implements AchievementInterface{
     function createBadgeCriteria($name, $sequence_order, $hit_count_requirement)
     {
 
-        BadgeCriteriaConfig::create([
+        $check = BadgeCriteriaConfig::query()->where('name',$name);
+        if ($check->exists()){
+          return $check->first();
+        }
+
+        return BadgeCriteriaConfig::create([
             'name'=>$name,
             'sequence_order'=>$sequence_order,
             'hit_count_requirement'=>$hit_count_requirement
         ]);
 
+    }
+
+    function countCommentAchievements()
+    {
+        return AchievementCriteriaConfig::query()->where('type',self::COMMENT_WRITTEN)->count();
+    }
+
+    function countLessonAchievements()
+    {
+        return AchievementCriteriaConfig::query()->where('type',self::LESSON_WATCHED)->count();
     }
 
 

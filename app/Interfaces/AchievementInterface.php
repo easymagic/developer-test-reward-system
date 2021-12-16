@@ -26,4 +26,7 @@ interface AchievementInterface{
     function createBadgeCriteria($name,$sequence_order,$hit_count_requirement);
     function createAchievementCriteria($name,$type,$sequence_order,$hit_count_requirement);
 
+    function countCommentAchievements();
+    function countLessonAchievements();
+
 }
