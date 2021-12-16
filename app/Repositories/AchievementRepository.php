@@ -138,5 +138,26 @@ class AchievementRepository implements AchievementInterface{
         ->exists();
     }
 
+    function createAchievementCriteria($name, $type, $sequence_order, $hit_count_requirement)
+    {
+        AchievementCriteriaConfig::create([
+            'name'=>$name,
+            'type'=>$type,
+            'sequence_order'=>$sequence_order,
+            'hit_count_requirement'=>$hit_count_requirement
+        ]);
+    }
+
+    function createBadgeCriteria($name, $sequence_order, $hit_count_requirement)
+    {
+
+        BadgeCriteriaConfig::create([
+            'name'=>$name,
+            'sequence_order'=>$sequence_order,
+            'hit_count_requirement'=>$hit_count_requirement
+        ]);
+
+    }
+
 
 }
