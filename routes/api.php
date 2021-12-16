@@ -1,5 +1,6 @@
 <?php
 
+use App\Interfaces\AchievementInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +17,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+
+Route::get('users/{user}/achievements',function($user, AchievementInterface $achievementInterface){
+
+    return [
+      'unlocked_achievements'=>'',
+      'next_available_achievements'=>'',
+      'current_badge'=>'',
+      'next_badge'=>'',
+      'remaining_to_unlock_next_badge'=>''
+    ];
+
+
 });

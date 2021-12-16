@@ -5,5 +5,6 @@ interface UserActivityInterface{
 
     function logLessonWatched($userId , AchievementInterface $achievementInterface);
     function logCommentWritten($userId , AchievementInterface $achievementInterface);
+    function getUnlockedAchievements($userId);
 
 }
