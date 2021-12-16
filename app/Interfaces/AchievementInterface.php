@@ -34,7 +34,5 @@ interface AchievementInterface{
     function userHasUnlockedBadgeByName($userId,$name);
 
 
-    function getRecentLessonWatchedAchievement($userId);
-    function getRecentCommentWrittenAchievement($userId);
 
 }

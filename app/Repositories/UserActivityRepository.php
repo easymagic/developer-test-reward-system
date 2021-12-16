@@ -3,7 +3,9 @@ namespace App\Repositories;
 
 use App\Interfaces\AchievementInterface;
 use App\Interfaces\UserActivityInterface;
+use App\Models\AchievementCriteriaConfig;
 use App\Models\UserActivity;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserActivityRepository implements UserActivityInterface{
 
@@ -67,6 +69,51 @@ class UserActivityRepository implements UserActivityInterface{
             'error'=>false
         ];
 
+    }
+
+    function getUnlockedAchievements($userId)
+    {
+       return AchievementCriteriaConfig::query()->whereHas('users',function(Builder $builder) use ($userId){
+         return $builder->where('user_id',$userId);
+       })->pluck('name');
+    }
+
+    function getRecentCommentWrittenAchievement($userId)
+    {
+      return AchievementCriteriaConfig::query()->whereHas('users',function(Builder $builder) use ($userId){
+          return $builder->where('user_id',$userId);
+      })->where('type',AchievementRepository::COMMENT_WRITTEN)->orderBy('sequence_order','desc')->first();
+    }
+
+    function getRecentLessonWatchedAchievement($userId)
+    {
+        return AchievementCriteriaConfig::query()->whereHas('users',function(Builder $builder) use ($userId){
+            return $builder->where('user_id',$userId);
+        })->where('type',AchievementRepository::LESSON_WATCHED)->orderBy('sequence_order','desc')->first();
+    }
+
+    function getNextAvailableCommentAchievements($userId)
+    {
+        $recent = $this->getRecentCommentWrittenAchievement($userId);
+        $index = 0;
+        if ($recent){
+         $index = $recent->id;
+        }
+        return AchievementCriteriaConfig::query()
+        ->where('id','>',$index)
+        ->where('type',AchievementRepository::COMMENT_WRITTEN)->orderBy('sequence_order','desc')->get();
+    }
+
+    function getNextAvailableLessonAchievements($userId)
+    {
+        $recent = $this->getRecentLessonWatchedAchievement($userId);
+        $index = 0;
+        if ($recent){
+         $index = $recent->id;
+        }
+        return AchievementCriteriaConfig::query()
+        ->where('id','>',$index)
+        ->where('type',AchievementRepository::LESSON_WATCHED)->orderBy('sequence_order','desc')->get();
     }
 
 }

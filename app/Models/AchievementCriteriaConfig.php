@@ -16,4 +16,8 @@ class AchievementCriteriaConfig extends Model
      'hit_count_requirement'
     ];
 
+    function users(){
+        return $this->hasMany(UserAchievementStack::class,'achievement_criteria_config_id');
+    }
+
 }
